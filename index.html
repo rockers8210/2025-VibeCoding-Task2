@@ -1,45 +1,275 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>洛克斯的測試網頁</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; max-width: 100%; }
-    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", Arial, sans-serif; line-height: 1.6; }
-    img { max-width: 100%; height: auto; display: block; }
-    .container { width: 1920px; margin: 0 auto; padding: 16px; }
-    nav a { margin-right: 12px; text-decoration: none; }
-    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
-    .col-12 { grid-column: span 12; }
-    @media (min-width: 768px) { .col-md-6 { grid-column: span 6; } }
-    .card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
-  
-   @media (min-width: 1440px) { .col-md-6 { grid-column: span 6; } }
-    .card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
-  
-     @media (min-width: 320px) { .col-md-6 { grid-column: span 6; } }
-    .card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
-  </style>
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name · Frontend Dev</title>
+    <!-- 引入 Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS Reset & Variables --- */
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --accent: #60a5fa;
+            --spacing-sm: 2rem;
+            --spacing-lg: 5rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Utilities --- */
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--spacing-sm) 0;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1rem;
+            position: relative;
+            /* Unsplash Image: Dark abstract/tech vibe */
+            background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Parallax effect */
+        }
+
+        /* Dark overlay for readability */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.05rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #e5e5e5;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            z-index: 2;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            opacity: 0.7;
+            animation: fadeIn 2s ease-out;
+        }
+
+        /* --- About Section --- */
+        .about {
+            padding: var(--spacing-lg) 0;
+            background-color: var(--bg-color);
+        }
+
+        /* --- Contact Section --- */
+        .contact {
+            padding: var(--spacing-lg) 0;
+            background-color: var(--card-bg); /* Slightly lighter dark background */
+            text-align: center;
+        }
+
+        .contact h2 {
+            display: inline-block;
+            border-left: none;
+            border-bottom: 4px solid var(--accent);
+            padding-left: 0;
+            padding-bottom: 0.5rem;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border: 1px solid var(--text-main);
+            border-radius: 50px;
+            font-weight: 600;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .btn:hover {
+            background-color: var(--text-main);
+            color: var(--bg-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary {
+            background-color: var(--text-main);
+            color: var(--bg-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent);
+            color: #fff;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            border-top: 1px solid #333;
+        }
+
+        /* --- RWD: Desktop Adjustments --- */
+        @media (min-width: 768px) {
+            .hero h1 {
+                font-size: 5rem;
+            }
+
+            .container {
+                padding: var(--spacing-lg) 0;
+            }
+
+            p {
+                font-size: 1.125rem;
+            }
+
+            .links {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .btn {
+                width: auto;
+                min-width: 200px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header class="container" role="banner">
-    <nav aria-label="主選單">
-      <a href="#about">關於我</a>
-      <a href="#projects">作品集</a>
-      <a href="https://example.com/blog">技術部落格</a>
-      <a href="mailto:me@example.com">聯絡我</a>
-    </nav>
-    <h1>你好，我是小明：前端工程師新手之路</h1>
-    
-    <p>歡迎來到我的個人網站！這裡整理了學習紀錄、Side Project 與實作心得。</p>
-  </header>
 
-  <footer class="container" role="contentinfo">
-    <p>© 2025 My Portfolio · <a href="#Portfolio">GitHub</a></p>
-    <img src="hhttps://unsplash.com/photos/looking-up-at-a-grand-domed-ceiling-with-columns-KgaDrj-PfbE" alt="我的圖片">
-  </footer>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Your Name</h1>
+            <p>專注於打造極致使用者體驗的前端工程師。</p>
+        </div>
+        <div class="scroll-down">Scroll to explore</div>
+    </header>
+
+    <main>
+        <!-- About Section -->
+        <section class="about">
+            <div class="container">
+                <h2>About Me</h2>
+                <div style="animation: fadeIn 1s ease-out;">
+                    <p>
+                        你好，我是一名熱愛技術的前端開發者。我有三年的網頁開發經驗，熟悉 HTML、CSS 與現代化前端框架。我喜歡解決複雜的問題，並致力於寫出乾淨、可維護的程式碼。在過去的專案中，我成功協助團隊提升了網站的效能與 SEO 排名。
+                    </p>
+                    <p>
+                        除了寫程式，我也熱衷於UI/UX設計與開源社群。我相信好的產品不僅在於功能強大，更在於能讓使用者感到愉悅。我不斷學習新技術，隨時準備好迎接下一個挑戰，希望能用我的技能為世界帶來一點點改變。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact">
+            <div class="container">
+                <h2>Get in Touch</h2>
+                <p>對我的作品感興趣嗎？歡迎透過以下方式聯繫我。</p>
+                
+                <div class="links">
+                    <!-- Email -->
+                    <a href="mailto:your.email@example.com" class="btn btn-primary">
+                        Email Me
+                    </a>
+                    
+                    <!-- GitHub -->
+                    <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="btn">
+                        GitHub Profile
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Your Name. All rights reserved.</p>
+    </footer>
+
 </body>
 </html>
